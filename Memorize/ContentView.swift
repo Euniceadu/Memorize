@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["🚗", "🚲", "✈️", "⛵️", "🛳", "🚡", "🛴", "🚑", "🚍", "🚢",           "🛩", "🚁", "🚎", "🚜", "🛶", "🚕", "🚙", "🚒", "🏎", "🚆", "🛵", "🏍", "🛻", "🚛"]
+    var vehicles = ["🚗", "🚲", "✈️", "⛵️", "🛳", "🚡", "🛴", "🚑", "🚍", "🚢", "🛩", "🚁", "🚎", "🚜", "🛶", "🚕", "🚙", "🚒", "🏎", "🚆", "🛵", "🏍", "🛻", "🚛"]
+    var animals = ["🐝", "🦀", "🦋", "🐬", "🐴", "🦄", "🐧", "🐸", "🐼", "🐶", "🐒", "🐦", "🐓", "🦜", "🐋", "🦖", "🦆", "🦅", "🐿", "🦚", "🦈", "🦎", "🐨", "🦊"]
+    var activities = ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓", "🏸", "🏏", "🥊", "⛳️", "🏑", "🪁", "⛸", "🤿", "🥍", "🥅", "⛷", "🏂"]
+    @State var emojis = ["🚗", "🚲", "✈️", "⛵️", "🛳", "🚡", "🛴", "🚑", "🚍", "🚢", "🛩", "🚁", "🚎", "🚜", "🛶", "🚕", "🚙", "🚒", "🏎", "🚆", "🛵", "🏍", "🛻", "🚛"]
     @State var emojiCount = 4
     var body: some View {
         VStack {
@@ -21,6 +24,26 @@ struct ContentView: View {
             Spacer()
             HStack {
                 remove
+                Spacer()
+                HStack {
+                    Button(action: {emojis = vehicles}, label: {
+                        VStack{
+                            Image(systemName: "car")
+                            Text("Vehicles").font(.footnote)
+                        }})
+                    
+                    Button(action: {emojis = animals}, label: {
+                        VStack{
+                            Image(systemName: "tortoise")
+                            Text("Animals").font(.footnote)
+                        }})
+                    Button(action: {emojis = activities}, label: {
+                        VStack{
+                            Image(systemName: "figure.walk")
+                            Text("Activities").font(.footnote)
+                        }
+                    })
+                }
                 Spacer()
                 add
                 
@@ -99,8 +122,10 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 11")
 .previewInterfaceOrientation(.portrait)
         ContentView()
+            .previewDevice("iPhone 11")
             .preferredColorScheme(.dark)
     }
 }
