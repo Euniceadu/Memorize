@@ -13,7 +13,14 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text(viewModel.selectedTheme.name).font(.largeTitle).foregroundColor(viewModel.color)
+            HStack {
+                Spacer()
+                Text(viewModel.selectedTheme.name).font(.largeTitle).foregroundColor(viewModel.color)
+                Spacer()
+                Text("Score: ")
+                Text("\(viewModel.gameScore)")
+                Spacer()
+            }
             Spacer()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 75))]) {

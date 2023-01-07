@@ -15,7 +15,7 @@ class EmojiMemoryGame: ObservableObject {
         let emojis = theme.emojis
         EmojiMemoryGame.emoji_indexes = Array(0..<emojis.count)
 //        required task 5
-        return MemoryGame<String>(numberOfPairsOfCards: 10) {
+        return MemoryGame<String>(numberOfPairsOfCards: theme.numberOfPairsOfCards) {
             pairIndex in emojis[getRandomEmoji()]
         }
     }
@@ -28,6 +28,12 @@ class EmojiMemoryGame: ObservableObject {
         all_themes.append(animals_theme)
         let activities_theme = Theme(name: "Activities", emojis: ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓", "🏸", "🏏", "🥊", "⛳️", "🏑", "🪁", "⛸", "🤿", "🥍", "🥅", "⛷", "🏂"], numberOfPairsOfCards: 10, color: "Green")
         all_themes.append(activities_theme)
+        let fruits_theme = Theme(name: "Fruits", emojis: ["🍐", "🥝", "🍋", "🍊", "🍌", "🍉", "🍇", "🍓", "🫐", "🍒"], numberOfPairsOfCards: 12, color: "Orange")
+        all_themes.append(fruits_theme)
+        let places_theme = Theme(name: "Places", emojis: ["⛪️", "🕌", "🕍", "🛕", "🛣"], numberOfPairsOfCards: 12, color: "Brown")
+        all_themes.append(places_theme)
+        let pastries_theme = Theme(name: "Pastries", emojis: ["🥮", "🥨", "🍞", "🥐", "🧁", "🥧"], numberOfPairsOfCards: 4, color: "Indigo")
+        all_themes.append(pastries_theme)
         
         return all_themes
     }
@@ -40,6 +46,10 @@ class EmojiMemoryGame: ObservableObject {
             return .blue
         case "green":
             return .green
+        case "orange":
+            return .orange
+        case "indigo":
+            return .indigo
         default:
                 return .red
         }
@@ -61,11 +71,16 @@ class EmojiMemoryGame: ObservableObject {
         selectedTheme = themes.randomElement()!
         model  = EmojiMemoryGame.createMemoryGame(theme: selectedTheme)
         color = EmojiMemoryGame.getColor(name: selectedTheme.color)
+        model.score = 0
     }
         
     
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
+    }
+    
+    var gameScore: Int {
+        return model.score
     }
     
 //    MARK: - Intent(s)
@@ -78,5 +93,6 @@ class EmojiMemoryGame: ObservableObject {
         selectedTheme = themes.randomElement()!
         color = EmojiMemoryGame.getColor(name: selectedTheme.color)
         model  = EmojiMemoryGame.createMemoryGame(theme: selectedTheme)
+        model.score = 0
     }
 }
