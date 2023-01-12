@@ -8,10 +8,11 @@
 import SwiftUI
 
 class EmojiMemoryGame: ObservableObject {
+    typealias Card = MemoryGame<String>.Card
     
-    static var emoji_indexes = Array<Int>()
+    private static var emoji_indexes = Array<Int>()
     
-    static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
+    private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         let emojis = theme.emojis
         EmojiMemoryGame.emoji_indexes = Array(0..<emojis.count)
 //        required task 5
@@ -20,7 +21,7 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    static func createThemes() -> Array<Theme> {
+    private static func createThemes() -> Array<Theme> {
         var all_themes = Array<Theme>()
         let vehicle_theme = Theme(name: "Vehicles", emojis: ["🚗", "🚲", "✈️", "⛵️", "🛳", "🚡", "🛴", "🚑", "🚍", "🚢", "🛩", "🚁", "🚎", "🚜", "🛶", "🚕", "🚙", "🚒", "🏎", "🚆", "🛵", "🏍", "🛻", "🚛"], numberOfPairsOfCards: 10, color: "Yellow")
         all_themes.append(vehicle_theme)
@@ -38,7 +39,7 @@ class EmojiMemoryGame: ObservableObject {
         return all_themes
     }
     
-    static func getColor(name: String) -> Color {
+    private static func getColor(name: String) -> Color {
         switch(name.lowercased()) {
         case "yellow":
             return .yellow
@@ -55,13 +56,13 @@ class EmojiMemoryGame: ObservableObject {
         }
     }
     
-    static func getRandomEmoji() -> Int {
+    private static func getRandomEmoji() -> Int {
         let emoji_index = EmojiMemoryGame.emoji_indexes.randomElement()!
         EmojiMemoryGame.emoji_indexes.remove(at: EmojiMemoryGame.emoji_indexes.firstIndex(of: emoji_index)!)
         return emoji_index
     }
     
-    private var themes: Array<Theme> = createThemes()
+    private var themes = createThemes()
     var selectedTheme: Theme
     var color: Color
     @Published private var model: MemoryGame<String>
@@ -75,7 +76,7 @@ class EmojiMemoryGame: ObservableObject {
     }
         
     
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: Array<Card> {
         return model.cards
     }
     
@@ -85,7 +86,7 @@ class EmojiMemoryGame: ObservableObject {
     
 //    MARK: - Intent(s)
     
-    func choose(_ card: MemoryGame<String>.Card) {
+    func choose(_ card: Card) {
         model.choose(card)
     }
     

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  EmojiMemoryGameView.swift
 //  Memorize
 //
 //  Created by Eunice Obugyei on 15/09/2022.
@@ -7,36 +7,36 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EmojiMemoryGameView: View {
     
-    @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var game: EmojiMemoryGame
     
     var body: some View {
         VStack {
             HStack {
                 Spacer()
-                Text(viewModel.selectedTheme.name).font(.largeTitle).foregroundColor(viewModel.color)
+                Text(game.selectedTheme.name).font(.largeTitle).foregroundColor(game.color)
                 Spacer()
                 Text("Score: ")
-                Text("\(viewModel.gameScore)")
+                Text("\(game.gameScore)")
                 Spacer()
             }
             Spacer()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 75))]) {
-                    ForEach(viewModel.cards) { card in
+                    ForEach(game.cards) { card in
                         CardView(card: card)
                         .aspectRatio(2/3, contentMode: .fit)
                         .onTapGesture {
-                            viewModel.choose(card)
+                            game.choose(card)
                         }
                     }
                 }
             }
-            .foregroundColor(viewModel.color)
+            .foregroundColor(game.color)
             .padding(.horizontal)
             Spacer()
-            Button(action: {viewModel.startNewGame()}, label: {Text("New Game")})
+            Button(action: {game.startNewGame()}, label: {Text("New Game")})
         
         }
         
@@ -89,10 +89,10 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game)
+        EmojiMemoryGameView(game: game)
             .previewDevice("iPhone 11")
 .previewInterfaceOrientation(.portrait)
-        ContentView(viewModel: game)
+        EmojiMemoryGameView(game: game)
             .previewDevice("iPhone 11")
             .preferredColorScheme(.dark)
     }
